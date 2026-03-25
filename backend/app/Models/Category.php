@@ -9,10 +9,15 @@ use Illuminate\Support\Str;
 
 class Category extends Model
 {   
+    
+    protected $table = 'categories'; // Forçar nome correto da tabela pra consertar erro
+
     protected $keyType = 'string';  
     public $incrementing = false;
+
     use HasFactory, HasUuids;
-    protected $fillable = ['name'];  
+    protected $fillable = ['id','name'];
+
     protected static function boot(){
         parent::boot();
         static::creating(function ($model) {

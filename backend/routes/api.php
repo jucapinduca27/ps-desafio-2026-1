@@ -1,10 +1,11 @@
 <?php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -13,13 +14,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 });
 
-Route::get(uri: '/category', action: [CategoryController::class, 'index']);
+/*Route::get(uri: '/category', action: [CategoryController::class, 'index']);
 Route::post(uri: '/category', action: [CategoryController::class,'store']);
 Route::get(uri: '/category/{id}',action: [CategoryController:: class, 'show']);
 Route::put(uri: '/category/{id}', action:[CategoryController:: class, 'update']);
-Route::delete(uri:'/category/{id}', action:[CategoryController:: class, 'destroy']);
+Route::delete(uri:'/category/{id}', action:[CategoryController:: class, 'destroy']);*/
 
-// Route::apiResource(name:'/category', controller:CategoryController::class);
+Route::apiResource(name:'/categories', controller:CategoryController::class);
+Route::apiResource(name:'/products', controller:ProductController::class);
+
 // Dentro do middleware, precisaria de autenticação para os requests!
 
 Route::middleware(['auth:sanctum', 'can:admin'])->group(function () {

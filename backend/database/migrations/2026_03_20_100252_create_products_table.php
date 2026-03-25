@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->integer('release_date');
             $table->integer('quantity')->default(0);
-            $table->foreignUlid('category_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
 
         });
