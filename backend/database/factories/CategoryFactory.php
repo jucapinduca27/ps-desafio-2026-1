@@ -14,10 +14,10 @@ class CategoryFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    public function definition(): array{
         return [
-            //
+            'id' => (string) \Illuminate\Support\Str::uuid(),
+            'name' => fake()->unique()->randomElement(['Futebol','Volei','Basquete','Corrida','Natação'])
         ];
     }
 }

@@ -13,7 +13,9 @@ class ProductController extends Controller
     public function index()
     {
         //return Product::all();
-        return Product::with('category')->get(); 
+        //return Product::with('category')->get(); 
+        $products = Product::with('category')->get();
+        return response()->json($products);
     }
 
     /**
@@ -27,8 +29,8 @@ class ProductController extends Controller
             'brand' => 'required|string|max:255',
             'price' => 'required|numeric',
             'image' =>  'nullable', // Deixar required desativado por enquanto
-            'release_date' => 'required|date',
-            'quantity' => 'required|numeric',
+            'release_year' => 'required|integer',
+            'quantity' => 'required|integer',
             'category_id' => 'required|exists:categories,id'
             
         ]);

@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('brand');
             $table->decimal('price',10,2);
             $table->string('image')->nullable();
-            $table->date('release_date');
+            $table->year('release_year'); // Colocar integer?
             $table->integer('quantity')->default(0);
             $table->foreignUuid('category_id')->constrained()->onDelete('restrict'); //cascade permitia que eu apagasse a categoria com produto dentro
-            $table->timestamps();
+            $table->timestamps(); //categoryid constrained to categories?
 
         });
     }

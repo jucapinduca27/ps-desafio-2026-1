@@ -16,7 +16,7 @@ class Product extends Model
         'brand',
         'price',
         'image',
-        'release_date',
+        'release_year',
         'quantity',
         'category_id',
     ];
