@@ -10,12 +10,27 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Product::with('category'); // eager loading 
+
+        if ($request->filled('sport')){ // Add filtro por tipo de esporte
+                $query->where('sport', $request->sport);
+        }
+        if ($request->filled('gender')){ // Add filtro por gênero
+                $query->where('gender', $request->gender);
+        }
+        if ($request->filled('type')){ // Add filtro por tipo de vestimenta
+                $query->where('type', $request->type);
+        }
+        if ($request->filled('category_id')){
+                $query->where('category_id', $request->category_id);
+        }
+        return response()->json($query->get(), 200);
         //return Product::all();
         //return Product::with('category')->get(); 
-        $products = Product::with('category')->get();
-        return response()->json($products);
+        /*$products = Product::with('category')->get();
+        return response()->json($products);*/
     }
 
     /**
