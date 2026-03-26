@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->uuid('id')->primary(); // id categoria
-            $table->string('name'); //nome da categoria
+            $table->string('name')->unique(); //nome da categoria. unique para não haver categorias com nomes repetidos
             $table->timestamps();
         });
     }

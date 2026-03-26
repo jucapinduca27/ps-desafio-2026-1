@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('brand');
             $table->decimal('price',10,2);
             $table->string('image')->nullable();
-            $table->integer('release_date');
+            $table->date('release_date');
             $table->integer('quantity')->default(0);
-            $table->foreignUuid('category_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('category_id')->constrained()->onDelete('restrict'); //cascade permitia que eu apagasse a categoria com produto dentro
             $table->timestamps();
 
         });

@@ -12,13 +12,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
-        //return Product::with('category)->get(); Colocar esse?
+        //return Product::all();
+        return Product::with('category')->get(); 
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -37,9 +38,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        return $product;
+        $product = \App\Models\Product::find($id);
+        dd($product);
     }
 
     /**
