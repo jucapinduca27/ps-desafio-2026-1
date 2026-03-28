@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -26,11 +27,8 @@ class ProductController extends Controller
         if ($request->filled('category_id')){
                 $query->where('category_id', $request->category_id);
         }
-        return response()->json($query->get(), 200);
-        //return Product::all();
-        //return Product::with('category')->get(); 
-        /*$products = Product::with('category')->get();
-        return response()->json($products);*/
+        $products = $query->get();
+        return ProductResource::collection($products); // usar collection para mostrar lista de produtos
     }
 
     /**
