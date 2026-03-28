@@ -27,53 +27,64 @@ class ProductController extends Controller
         if ($request->filled('category_id')){
                 $query->where('category_id', $request->category_id);
         }
-        $products = $query->get();
-        return ProductResource::collection($products); // usar collection para mostrar lista de produtos
+        return ProductResource::collection($query->paginate(20));
+        //$products = $query->get();
+        //return ProductResource::collection($products); // usar collection para mostrar lista de produtos
     }
-
     /**
      * Store a newly created resource in storage.
      */
-
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'image' =>  'nullable', // Deixar required desativado por enquanto
+            'image_url' =>  'nullable|url', // Deixar required desativado por enquanto
             'release_year' => 'required|integer',
             'quantity' => 'required|integer',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
+            'sport' => 'nullable|string',
+            'gender'=> 'nullable|string',
+            'type' => 'nullable|string'
             
         ]);
-        return Product::create($validated);
+        $product = Product::create($validated);
+        return new ProductResource($product);
     }
-
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        $product = \App\Models\Product::find($id);
-        dd($product);
+        return new ProductResource($product->load('category'));
     }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Product $product)
     {
-        $product->update($request->all());
-        return $product;
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'brand' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'image_url' =>  'nullable|url', // Adicionar link imagem direto (image ou image_url?)
+            'release_year' => 'required|integer',
+            'quantity' => 'required|integer',
+            'category_id' => 'required|exists:categories,id',
+            'sport' => 'nullable|string',
+            'gender'=> 'nullable|string',
+            'type' => 'nullable|string'
+        ]);
+        $product->update($validated);
+        return new ProductResource($product);
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Product $product)
     {
         $product->delete();
-        return response()->json(['message' => 'Produto removido com sucesso!']);
+        return response()->json(['message' => 'Produto removido!']);
     }
 }

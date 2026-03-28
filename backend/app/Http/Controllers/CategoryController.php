@@ -29,16 +29,10 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|unique:categories,name|max:255'
-        ]);
+        $validated = $request->validate(['name' => 'required|string|unique:categories']);
         $category = Category::create($validated);
-        return response()->json($category,201);
-        /*$data = $request->validated();
-        $category = $this->category->create($data);
-        return response()->json(data:$category,status:Response::HTTP_CREATED);*/
+        return response()->json($category);
     }
-
     /**
      * Display the specified resource.
      */
@@ -63,15 +57,10 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $validated = $request->validate([
-            'name'=> 'required|string|max:255|unique:categories,name,' .$id,
+            'name'=> 'required|string|max:255|unique:categories,name,' .$category->id,
         ]);
         $category->update($validated);
         return response()->json($category);
-        /*$category = $this->category->findOrFail($id);
-        $data = $request->validated();
-        $category->update($data);
-        return response()->json(data: $category, status: Response::HTTP_OK);*/
-
     }
 
     /**
@@ -80,10 +69,10 @@ class CategoryController extends Controller
     public function destroy($id): JsonResponse
     {
         $category = $this->category->findOrFail($id);
-        if(!$category){
+        if(!$category){ // Se a categoria não existir, não dá pra deletar
             return response()->json(['message'=>'Categoria não encontrada']);
         }
-        if($category->products()->count()> 0){
+        if($category->products()->count()> 0){ // Se a categoria tiver produtos vinculados, não dá pra deletar
             return response()->json([
                 'error'=>'Operação não permitida!',
                 'message' => 'Tal categoria possui produtos vinculados, por isso não pode ser deletada'
