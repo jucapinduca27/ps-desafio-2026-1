@@ -19,18 +19,17 @@ import { DialogInformationSportsItem } from './dialog-information-sports-item'
 import { DialogCreateSportsItem } from './dialog-create-sports-item'
 
 export default async function ListSportsItems() {
-  const { response } = null // requisicao para api
+  const  response  = await api.get('/sports-item') // requisicao para api
 
   if (!response) {
     return (
       <DashboardContainer className="text-destructive">
-        Não foi possível obter os imóveis.
+        Não foi possível obter os artigos/produtos.
       </DashboardContainer>
     )
   }
 
-  const sportsItems: sportsItemType[] = response
-
+  const sportsItems: sportsItemType[] = response.data
   return (
     <>
       <DashboardContainer className="flex h-min justify-between space-x-0 gap-y-2.5 max-sm:flex-col">
@@ -60,8 +59,8 @@ export default async function ListSportsItems() {
                 </TableCell>
                 
                 <TableCell>{sportsItem.title}</TableCell>
-                <TableCell>{sportsItem.amount}</TableCell>
                 <TableCell>{sportsItem.category.name}</TableCell>
+                <TableCell>{sportsItem.amount}</TableCell>
                 {/* demais propriedades de sportsItemType */}
                 
                 <TableCell className="flex justify-end gap-2">
