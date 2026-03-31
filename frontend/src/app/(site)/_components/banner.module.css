@@ -1,8 +1,32 @@
-.container {
-    aspect-ratio: 1200 / 800;
-}
-.bannerImage {
+.bannerContainer {
+    position: relative; /* Contexto para a imagem fill */
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 400px;      /* Altura do banner em telas grandes */
+    overflow: hidden;
+    display: block;     /* Garante que ele ocupe espaço no fluxo */
+    margin-bottom: 40px; /* Empurra os produtos para baixo */
+}
+
+/* Para telas de celular, diminuímos a altura */
+@media (max-width: 768px) {
+    .bannerWrapper {
+        height: 250px;
+    }
+}
+
+.bannerImage {
+    object-fit: cover;  /* Preenche o espaço sem achatar a imagem */
+    z-index: 1;         /* Fica no fundo */
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.6), transparent);
+    z-index: 2;         /* Fica em cima da imagem */
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    color: white;
+    font-family: sans-serif;
 }

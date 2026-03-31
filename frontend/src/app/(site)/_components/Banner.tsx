@@ -1,12 +1,18 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import styles from './banner.module.css'
+import Link from 'next/link'
 
 
 export default function Banner(){
     return (
-        <div className={styles.container}>
-            <Image className={styles.bannerImage} src="/assets/images/banner" width={100} height={150} alt="banner"/>
-        </div>
+        <section className={styles.bannerContainer}>
+            <Image className={styles.bannerImage} src="/assets/banner.jpg" fill priority alt="banner"/>
+            <div className={styles.bannerOverlay}>
+                <div>
+                    <h1 style={{ fontSize: '3rem', margin: 0 }}>OFF SEASON</h1>
+                    <p style={{ fontSize: '1.2rem' }}>Os melhores artigos esportivos de 2026.</p>
+                </div>
+            </div>
+        </section>
     )
 }
