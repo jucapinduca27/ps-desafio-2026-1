@@ -27,7 +27,7 @@ export default function Products() {
         gender: "Feminino",
         type: "Chuteira",
         year: 2023,
-        quantity: 35,
+        quantity: 0,
         image_url: "/assets/mercurial.jpg",
         category: "Calçados",
     },

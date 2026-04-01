@@ -6,22 +6,39 @@ import { sportsItem } from "@/types/sportsItem"
 
 
 export default function ProductCard(artigo: sportsItem){
-    console.log(artigo)
+    const semEstoque = artigo.quantity === 0; 
     return (
-        
-        <div className = {styles.productCard}>
+        <div className ={`${styles.productCard} ${semEstoque ? styles.semEstoque: ""}`}>
         <Link href={`/artigo/${artigo.id}`} className={styles.productLinks}>
-            <Image className={styles.productImage} src={artigo.image_url} alt={artigo.name} width={300} height={300} style={{ objectFit: 'contain' }}/>
+            <div className={styles.imageWrapper}>
+                <Image className={styles.productImage} 
+                src={artigo.image_url} 
+                alt={artigo.name}
+                fill 
+                style={{ objectFit: 'contain' }}
+                />
+            </div>
         </Link>
-        <h1 className={styles.productName}>{artigo.name}</h1>
-        <p className={styles.productCategory}>{artigo.category}</p>
-        <p className={styles.productBrand}>{artigo.brand}</p>
-        <p className={styles.productGender}>{artigo.gender}</p>
-        <p className={styles.productSport}>{artigo.sport}</p>
-        <p className={styles.productType}>{artigo.type}</p>
-        <p className={styles.productYear}>{artigo.year}</p>
-        <p className={styles.productPrice}>{artigo.price}</p>
-        <p className={styles.productStock}>{artigo.quantity}</p>
+        <div className={styles.productInfo}>
+            <span className = {styles.CategoryBadge}>{artigo.category}</span>
+            <h3 className={styles.productName}>{artigo.name}</h3>
+
+            <div className={styles.productDetails}>
+                <span>{artigo.brand}</span>
+            </div>
+
+            <div className={styles.priceRow}>
+                <p className={styles.productPrice}>
+                    {new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(artigo.price)}
+                </p>
+                <span className={`${styles.productStock} ${semEstoque ? styles.textEsgotado: ""}`}>
+                    {semEstoque ? "Produto Esgotado": `${artigo.quantity} em estoque`}
+                </span>
+            </div>
+            <button className={styles.productButton} disabled={semEstoque}>
+                {semEstoque ? "Produto Indisponível": "Comprar"}
+            </button>
         </div>
+    </div>
     )
 }
