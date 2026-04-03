@@ -12,12 +12,12 @@ import { Input } from '@/components/input'
 import { Label } from '@/components/label'
 import { cn } from '@/lib/utils'
 import { ResponseErrorType } from '@/services/api'
-import { sportsItemType } from '@/types/sportsItem'
+import { sportsItem } from '@/types/sportsItem'
 import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 
 interface FormFieldsSportsItemProps {
-  sportsItem?: sportsItemType | null
+  sportsItem?: sportsItem | null
   readOnly?: boolean
   error?: ResponseErrorType | null
 }
@@ -34,6 +34,7 @@ export default function FormFieldsSportsItem({
     <>
       <FormFieldsGroup>
         {sportsItem && <Input defaultValue={sportsItem.id} type="text" name="id" hidden />}
+        
         {/* inserir campos do formulário */}
       </FormFieldsGroup>
       <DialogFooter className={cn({ hidden: readOnly })}>

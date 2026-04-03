@@ -13,7 +13,7 @@ import { updateSportsItem } from '@/actions/sportsItem'
 import { filterFormData } from '@/services/filter-form-data'
 import { useEffect, useState } from 'react'
 import { useToast } from '@/components/use-toast'
-import { sportsItemType } from '@/types/sportsItem'
+import { Product } from '@/types/product'
 import { ResponseErrorType, api } from '@/services/api'
 
 interface DialogUpdateSportsItemProps {
@@ -22,19 +22,19 @@ interface DialogUpdateSportsItemProps {
 }
 
 export function DialogUpdateSportsItem({ id, children }: DialogUpdateSportsItemProps) {
-  const [sportsItem, setSportsItem] = useState<sportsItemType | null>(null)
+  const [Product, setProduct] = useState<Product | null>(null)
   const [open, setOpen] = useState<boolean>()
   const [error, setError] = useState<ResponseErrorType | null>(null)
   const { toast } = useToast()
 
   useEffect(() => {
     const requestData = async () => {
-      const { response } = await api<sportsItemType>('GET', `/sports-items/${id}`)
+      const { response } = await api<Product>('GET', `/products/${id}`)
 
       if (response) {
-        setSportsItem(response)
+        setProduct(response)
       } else {
-        setSportsItem(null)
+        setProduct(null)
         toast({
           title: 'Artigo esportivo  não encontrado!',
         })
@@ -45,7 +45,7 @@ export function DialogUpdateSportsItem({ id, children }: DialogUpdateSportsItemP
     requestData()
 
     return () => {
-      setSportsItem(null)
+      setProduct(null)
       setError(null)
     }
   }, [id, open, toast])
@@ -53,8 +53,7 @@ export function DialogUpdateSportsItem({ id, children }: DialogUpdateSportsItemP
   const submit = async (form: FormData) => {
     const newForm = await filterFormData(form)
 
-    const { error } = null 
-
+    const { error } = await api('PUT', `/products/${id}`, { data: newForm });
     if (error) {
       setError(error)
       toast({
@@ -80,7 +79,7 @@ export function DialogUpdateSportsItem({ id, children }: DialogUpdateSportsItemP
           </DialogDescription>
         </DialogHeader>
         <form action={submit}>
-          <FormFieldsSportsItem error={error} sportsItem={sportsItem} />
+          <FormFieldsSportsItem error={error} sportsItem={Product} />
         </form>
       </DialogContent>
     </Dialog>

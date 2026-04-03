@@ -10,9 +10,9 @@ export default auth(async (req) => {
     return Response.redirect(new URL(getUrl('/')))
   }
 
-  if (!permissions?.includes('admin') && pathname.startsWith('/admin')) {
+  /*if (!permissions?.includes('admin') && pathname.startsWith('/admin')) {
     return Response.redirect(new URL(getUrl('/auth/sign-in')))
-  }
+  }*/
 })
 
 export const config = {
