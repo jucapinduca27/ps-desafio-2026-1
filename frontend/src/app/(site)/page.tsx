@@ -1,8 +1,53 @@
+
 import Header from './_components/Header'
 import ProductCard from './_components/ProductCard'
 import { sportsItem } from '@/types/sportsItem'
+import {useState} from 'react';
+import ProductGrid from './_components/ProductGrid'
 
-export default async function Home() {
+export default async function Page() {
+    const res = await fetch('http://localhost:8000/api/products', { cache: 'no-store' });
+    const json = await res.json();
+    const dataArtigos = json.data || [];
+    const artigos = dataArtigos.map((item:any)=>({
+      id: item.id,
+      name: item.nome,
+      brand: item.marca,
+      price: item.preço,
+      sport: item.esporte,
+      gender: item.genero,
+      type: item.tipo,
+      image_url: item.image,
+      year: item.ano,
+      quantity: item.quantidade,
+      category: item.categoria,
+    }));
+  return(
+    <main>
+      <Header/>
+      <ProductGrid artigosIniciais={artigos}/>
+    </main>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*export default async function Home() {
   const response = await fetch('http://localhost:8000/api/products', {
     headers: {
       'Accept': 'application/json',
@@ -31,4 +76,4 @@ export default async function Home() {
       </main>
     </>
   )
-}
+}*/
