@@ -24,25 +24,41 @@ export function DialogInformationSportsItem({
   id,
   children,
 }: DialogInformationSportsItemProps) {
-  const [Product, setProduct] = useState<Product | null>(null)
+  const [product, setProduct] = useState<Product | null>(null)
   const [open, setOpen] = useState<boolean>()
   const { toast } = useToast()
 
   useEffect(() => {
     const requestData = async () => {
       interface ApiResponse {
-        data: Product;
+        data: any;
       }
       const { response, error } = await api<ApiResponse>('GET', `/products/${id}`);
 
       if (response) {
-        setProduct(response.data || response);
-      } 
+        const item = response.data || response ;
+        const product: Product = {
+          id: item.id,
+          name: item.nome,
+          brand: item.marca,
+          price: item["preço"],
+          sport: item.esporte,
+          gender: item["gênero"],
+          type: item.tipo,
+          year: item["ano de lançamento"] || item.ano,
+          category: item.categoria,
+          quantity: item.quantidade,
+          image_url: item.imagem,
+          formated_price: item.preço_formatado,
+        };
+          setProduct(product);
+        }
+      
       if (error){
-        console.error("erro", error);
+        console.error("Erro ao buscar informações", error);
       }
     }
-    if (id) {
+    if (id && open) {
        requestData();
     }
    //return () => setSportsItem(null)
@@ -58,7 +74,14 @@ export function DialogInformationSportsItem({
             Visualize as informações detalhadas do artigo esportivo abaixo.
           </DialogDescription>
         </DialogHeader>
-        <FormFieldsSportsItem sportsItem={Product} readOnly />
+        {product ? ( 
+          <FormFieldsSportsItem Product={product} readOnly />
+        ) : (
+          <div>
+              Carregando informações...
+          </div>
+        )}
+        
       </DialogContent>
     </Dialog>
   )

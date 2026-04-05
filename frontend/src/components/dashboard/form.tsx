@@ -4,6 +4,7 @@ import { ImgSuspense } from '../img-fallback'
 import { Skeleton } from '../skeleton'
 import { LuImageOff } from 'react-icons/lu'
 
+
 export function FormField({
   children,
   className,
@@ -28,7 +29,7 @@ export function FormFieldsGroup({ children }: { children: React.ReactNode }) {
   return <div className="flex flex-col gap-4 py-4">{children}</div>
 }
 
-export function ImageForm({ src, className, ...props }: ComponentProps<'img'>) {
+export function ImageForm({src, className, ...props }: ComponentProps<'img'>) {
   return (
     src && (
       <ImgSuspense
