@@ -1,11 +1,11 @@
 'use client';
 import ProductCard from './ProductCard'
-import { sportsItem } from '@/types/sportsItem'
+import { Product } from '@/types/product'
 import {useState} from 'react';
 import styles from './productgrid.module.css'
 
 interface ProductGridProps {
-    artigosIniciais: sportsItem[];
+    artigosIniciais: Product[];
 }
 
 export default function GridFilter({artigosIniciais}: ProductGridProps) {

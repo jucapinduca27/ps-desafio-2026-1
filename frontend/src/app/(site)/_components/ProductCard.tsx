@@ -1,11 +1,11 @@
 import styles from "./productCard.module.css"
 import Image from 'next/image'
 import Link from 'next/link'
-import { sportsItem } from "@/types/sportsItem"
+import {Product } from "@/types/product"
 
 
 
-export default function ProductCard(artigo: sportsItem){
+export default function ProductCard(artigo: Product){
     const semEstoque = artigo.quantity === 0; 
     return (
         <div className ={`${styles.productCard} ${semEstoque ? styles.semEstoque: ""}`}>

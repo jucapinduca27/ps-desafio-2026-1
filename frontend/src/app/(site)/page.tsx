@@ -1,7 +1,7 @@
 
 import Header from './_components/Header'
 import ProductCard from './_components/ProductCard'
-import { sportsItem } from '@/types/sportsItem'
+import { Product } from '@/types/product'
 import {useState} from 'react';
 import ProductGrid from './_components/ProductGrid'
 
