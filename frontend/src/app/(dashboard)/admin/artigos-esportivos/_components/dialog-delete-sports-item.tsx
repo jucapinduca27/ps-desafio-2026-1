@@ -24,7 +24,8 @@ export function DialogSportsItemDelete({ id, children }: DialogCreateSportsItemP
   const { toast } = useToast()
 
   const submit = async () => {
-    const { error } = await JSON.parse(await destroySportsItem(id))
+    //const { error } = await JSON.parse(await destroySportsItem(id))
+    const {error} = await api('DELETE', `/products/${id}`)
 
     if (error) {
       toast({

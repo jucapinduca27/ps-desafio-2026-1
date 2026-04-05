@@ -72,7 +72,7 @@ export default async function ListSportsItems() {
                 category: item.categoria,
                 quantity: item.quantidade,
                 image_url: item.imagem,
-                formated_price: item.preço_formatado,
+                formated_price: item["preço_formatado"],
     
               };
 

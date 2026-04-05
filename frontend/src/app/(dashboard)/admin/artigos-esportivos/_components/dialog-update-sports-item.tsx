@@ -16,39 +16,55 @@ import { useToast } from '@/components/use-toast'
 import { Product } from '@/types/product'
 import { ResponseErrorType, api } from '@/services/api'
 
+
 interface DialogUpdateSportsItemProps {
   id: string
   children: React.ReactNode
 }
 
 export function DialogUpdateSportsItem({ id, children }: DialogUpdateSportsItemProps) {
-  const [Product, setProduct] = useState<Product | null>(null)
+  const [product, setProduct] = useState<Product | null>(null)
   const [open, setOpen] = useState<boolean>()
   const [error, setError] = useState<ResponseErrorType | null>(null)
   const { toast } = useToast()
 
-  useEffect(() => {
-    const requestData = async () => {
-      const { response } = await api<Product>('GET', `/products/${id}`)
+useEffect(() => {
+  if (!open || !id) return;
 
-      if (response) {
-        setProduct(response)
-      } else {
-        setProduct(null)
-        toast({
-          title: 'Artigo esportivo  não encontrado!',
-        })
-        setOpen(false)
-      }
+  const requestData = async () => {
+    console.log("CHAMANDO API PARA ID:", id);
+    const result = await api<any>('GET', `/products/${id}`);
+    
+    // DEBUG CRÍTICO: O que está vindo no 'result'?
+    console.log("DEBUG API RESULT:", result);
+
+    if (result.response && result.response.data) {
+      const item = result.response.data;
+      
+      // 2. Mapeamento direto (Garanta que os nomes batem com o JSON do Laravel)
+      setProduct({
+        id: item.id,
+        name: item.nome,          // Laravel 'nome' -> Frontend 'name'
+        brand: item.marca,
+        price: item.preço,
+        category: item.categoria,
+        quantity: item.quantidade,
+        image_url: item.imagem,
+        sport: item.esporte,
+        gender: item.gênero,
+        type: item.tipo,
+        year: item["ano de lançamento"] || item.ano,
+        formated_price: item["preço_formatado"]
+      });
+    } else if (result.error) {
+      // 3. Se deu erro, o log vai te dizer EXATAMENTE o que é (CORS, 404, 500)
+      console.error("ERRO DETALHADO:", result.error);
+      toast({ title: "Erro: " + (result.error.message || "Falha na API") });
     }
+  };
 
-    requestData()
-
-    return () => {
-      setProduct(null)
-      setError(null)
-    }
-  }, [id, open, toast])
+  requestData();
+}, [id, open]);
 
   const submit = async (form: FormData) => {
     const newForm = await filterFormData(form)
@@ -65,9 +81,12 @@ export function DialogUpdateSportsItem({ id, children }: DialogUpdateSportsItemP
       })
       setOpen(false)
     }
+    
   }
-
+  
+  
   return (
+    
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
@@ -79,9 +98,9 @@ export function DialogUpdateSportsItem({ id, children }: DialogUpdateSportsItemP
           </DialogDescription>
         </DialogHeader>
         <form action={submit}>
-          <FormFieldsSportsItem error={error} sportsItem={Product} />
+          {product && (<FormFieldsSportsItem key ={product?.id} error={error} Product={product} />)}
         </form>
       </DialogContent>
     </Dialog>
-  )
-}
+  )}
+

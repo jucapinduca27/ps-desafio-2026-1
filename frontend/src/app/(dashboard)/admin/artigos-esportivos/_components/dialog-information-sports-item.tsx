@@ -35,7 +35,7 @@ export function DialogInformationSportsItem({
       }
       const { response, error } = await api<ApiResponse>('GET', `/products/${id}`);
 
-      if (response) {
+      if (response && response.data) {
         const item = response.data || response ;
         const product: Product = {
           id: item.id,
@@ -49,7 +49,7 @@ export function DialogInformationSportsItem({
           category: item.categoria,
           quantity: item.quantidade,
           image_url: item.imagem,
-          formated_price: item.preço_formatado,
+          formated_price: item["preço_formatado"],
         };
           setProduct(product);
         }
@@ -75,7 +75,7 @@ export function DialogInformationSportsItem({
           </DialogDescription>
         </DialogHeader>
         {product ? ( 
-          <FormFieldsSportsItem Product={product} readOnly />
+          <FormFieldsSportsItem Product={product ?? undefined} readOnly />
         ) : (
           <div>
               Carregando informações...

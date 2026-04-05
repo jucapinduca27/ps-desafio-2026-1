@@ -51,10 +51,10 @@ export default function FormFieldsSportsItem({
           if (file) setUpdateImage(URL.createObjectURL(file));
         }}
         />
-        {error?.image && <span>{error.image}</span>}
+        
         
         </FormField>
-
+        
         <FormField>
           <Label htmlFor="name">Nome</Label>
           <Input 
@@ -64,7 +64,7 @@ export default function FormFieldsSportsItem({
             readOnly={readOnly}
             disabled={pending}
             placeholder="Digite o nome do artigo aqui..."/>
-            error?: any
+            
         </FormField>
         <FormField>
           <Label htmlFor="brand">Marca</Label>
