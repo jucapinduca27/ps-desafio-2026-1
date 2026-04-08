@@ -40,7 +40,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'image_url' =>  'nullable|url', // Deixar required desativado por enquanto
+            'image' =>  'nullable|url', // Deixar required desativado por enquanto
             'release_year' => 'required|integer',
             'quantity' => 'required|integer',
             'category_id' => 'required|exists:categories,id',

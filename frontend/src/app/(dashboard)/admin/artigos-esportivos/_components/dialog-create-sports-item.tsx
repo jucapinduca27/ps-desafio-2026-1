@@ -33,14 +33,16 @@ export function DialogCreateSportsItem({ children }: DialogCreateSportsItemProps
   const submit = async (form: FormData) => {
     const newForm = await filterFormData(form)
 
-    const { error } = await JSON.parse(await createSportsItem(newForm))
-
+    const result = await createSportsItem(newForm);
+    const {error} = result;
     if (error) {
-      setError(error)
+      console.error('Sem retorno da API')
       toast({
         title: 'Não foi possível criar o artigo esportivo!',
       })
-    } else {
+      return ;
+    } 
+    else{
       toast({
         title: 'Artigo esportivo criado com sucesso!',
       })

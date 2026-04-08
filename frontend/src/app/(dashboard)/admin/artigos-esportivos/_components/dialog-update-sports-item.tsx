@@ -24,10 +24,10 @@ interface DialogUpdateSportsItemProps {
 
 export function DialogUpdateSportsItem({ id, children }: DialogUpdateSportsItemProps) {
   const [product, setProduct] = useState<Product | null>(null)
-  const [open, setOpen] = useState<boolean>()
+  const [open, setOpen] = useState(false)
   const [error, setError] = useState<ResponseErrorType | null>(null)
   const { toast } = useToast()
-
+  
 useEffect(() => {
   if (!open || !id) return;
 
@@ -68,7 +68,7 @@ useEffect(() => {
 
   const submit = async (form: FormData) => {
     const newForm = await filterFormData(form)
-
+    console.log("FORM DATA:", Object.fromEntries(form));
     const { error } = await api('PUT', `/products/${id}`, { data: newForm });
     if (error) {
       setError(error)

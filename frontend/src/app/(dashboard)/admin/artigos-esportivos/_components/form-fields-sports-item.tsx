@@ -79,8 +79,8 @@ export default function FormFieldsSportsItem({
         <FormField>
           <Label htmlFor="category">Categoria</Label>
           <select
-          id="category"
-          name="category"
+          id="category_id"
+          name="category_id"
           defaultValue={Product?.category}
           disabled={readOnly||pending}
           >
@@ -151,6 +151,16 @@ export default function FormFieldsSportsItem({
             <option value="Unissex">Unissex</option>
 
           </select>
+        </FormField>
+        <FormField>
+          <Label htmlFor="type">Tipo</Label>
+          <Input
+            id="type"
+            name="type"
+            defaultValue={Product?.type}
+            readOnly={readOnly}
+            disabled={pending}
+            placeholder="Digite o tipo do artigo aqui..."/>
         </FormField>
       </FormFieldsGroup>
       <DialogFooter className={cn({ hidden: readOnly })}>

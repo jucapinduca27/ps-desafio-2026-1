@@ -16,17 +16,17 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nome' => $this->name,
-            'marca' => $this->brand,
-            'preço' => $this->price,
-            'esporte' => $this->sport,
-            'gênero' => $this->gender,
-            'tipo' => $this->type,
-            'imagem' => $this->image,
-            'ano de lançamento' => $this->release_year,
-            'quantidade' => $this->quantity,
-            'categoria'=> $this->category?->name??'Não possui categoria' , 
-            'preço_formatado'=> 'R$ ' .number_format($this->price,2,',','.'),
+            'name' => $this->name,
+            'brand' => $this->brand,
+            'price' => $this->price,
+            'sport' => $this->sport,
+            'gender' => $this->gender,
+            'type' => $this->type,
+            'image' => $this->image,
+            'release_year' => $this->release_year,
+            'quantity' => $this->quantity,
+            'category'=> $this->category?->name??'Não possui categoria' , 
+            'formated_price'=> 'R$ ' .number_format($this->price,2,',','.'),
         ];
     }
 }

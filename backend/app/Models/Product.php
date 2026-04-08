@@ -19,6 +19,9 @@ class Product extends Model
         'release_year',
         'quantity',
         'category_id',
+        'sport',
+        'gender',
+        'type'
     ];
 
     public function category(){

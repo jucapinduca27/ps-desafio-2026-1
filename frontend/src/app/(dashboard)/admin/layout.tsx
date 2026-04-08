@@ -11,9 +11,9 @@ export default async function AdminLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="md:grid md:grid-cols-[18rem_1fr]">
+    <div>
       <SidebarMain />
-      <div className="md:h-screen md:overflow-y-auto">{children}</div>
+      <div>{children}</div>
     </div>
   )
 }

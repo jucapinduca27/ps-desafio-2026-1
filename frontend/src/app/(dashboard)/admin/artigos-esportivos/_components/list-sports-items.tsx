@@ -66,12 +66,12 @@ export default async function ListSportsItems() {
                 brand: item.marca,
                 price: item["preço"],
                 sport: item.esporte,
-                gender: item["gênero"],
+                gender: item["gênero"] || item.gender,
                 type: item.tipo,
                 year: item["ano de lançamento"] || item.ano,
-                category: item.categoria,
-                quantity: item.quantidade,
-                image_url: item.imagem,
+                category: typeof item.categoria === 'object' ? item.categoria.name : item.categoria,
+                quantity: item.quantidade || item.quantity,
+                image_url: item.imagem || item.image_url,
                 formated_price: item["preço_formatado"],
     
               };
