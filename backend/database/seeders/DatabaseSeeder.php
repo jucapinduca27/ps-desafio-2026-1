@@ -25,4 +25,5 @@ class DatabaseSeeder extends Seeder
         ]);
         $user->assignPermission('admin');*/
     }
+    
 }
